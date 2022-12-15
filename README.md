@@ -7,7 +7,7 @@ Over 200 participants each tasked with creating an AI to classify fashion items.
 ## To run
 
 1. Download full training input from [kaggle](https://www.kaggle.com/datasets/zalando-research/fashionmnist)
-1. Set up a virtual environment (optional)
+1. Set up a virtual environment using Python 3.10 (optional)
 1. Install requirements
 
     ```bash

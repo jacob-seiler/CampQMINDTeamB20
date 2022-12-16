@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_image_select import image_select
-import keras
-from keras.models import Sequential
+from tensorflow import keras
+from keras import Sequential
 from PIL import Image
 from io import BytesIO
 import numpy as np

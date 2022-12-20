@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_image_select import image_select
-from tensorflow import keras
+import keras
 from keras import Sequential
 from PIL import Image
 from io import BytesIO
@@ -9,7 +9,7 @@ from rembg import remove
 
 @st.cache(allow_output_mutation=True)
 def load_model() -> Sequential:
-    model = keras.models.load_model("../FashionClassifierModel/model")
+    model = keras.models.load_model("model")
     return model
 
 def image_selector():

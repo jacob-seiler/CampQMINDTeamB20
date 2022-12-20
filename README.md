@@ -1,6 +1,6 @@
 # Fashion Classifier
 
-Demo: <https://huggingface.co/spaces/Jacobs/Fashion-Classifier>
+Demo: <https://fashion-classifier.streamlit.app/>
 
 Team Members: Jacob Seiler, Chen Dan, and Henry Tsui
 

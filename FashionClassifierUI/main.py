@@ -9,19 +9,7 @@ from rembg import remove
 import urllib.request
 import os
 
-@st.experimental_singleton
-def load_model() -> Sequential:
-    if not os.path.isdir("model"):
-        os.makedirs("model/variables")
-
-        for file in ["variables/variables.data-00000-of-00001", "variables/variables.index", "keras_metadata.pb", "saved_model.pb"]:
-            filename = urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/model/{file}', f"model/{file}")
-            print(file, filename)
-    
-    return keras.models.load_model("model")
-
-def image_selector():
-    paths = [
+IMAGE_PATHS = [
             "images/custom.jpg",
             "images/t-shirt.jpg",
             "images/pants.jpg",
@@ -34,10 +22,21 @@ def image_selector():
             "images/bag.jpg",
             "images/boots.jpg"
         ]
+
+@st.experimental_singleton
+def load_model() -> Sequential:
+    if not os.path.isdir("model"):
+        os.makedirs("model/variables")
+
+        for file in ["variables/variables.data-00000-of-00001", "variables/variables.index", "keras_metadata.pb", "saved_model.pb"]:
+            urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/model/{file}', f"model/{file}")
     
+    return keras.models.load_model("model")
+
+def image_selector():
     selection = image_select(
         label="Sample images",
-        images=paths,
+        images=IMAGE_PATHS,
         captions=["Upload Custom", *classes],
         return_value="index"
     )
@@ -51,7 +50,7 @@ def image_selector():
             bytes_data = file.read()
             img = Image.open(BytesIO(bytes_data))
     else:
-        img = Image.open(paths[selection])
+        img = Image.open(IMAGE_PATHS[selection])
 
     if img is not None:
         predictor(img)
@@ -97,6 +96,13 @@ def main():
     with st.spinner("Loading model..."):
         global model
         model = load_model()
+
+    if not os.path.isdir("images"):
+        with st.spinner("Loading images..."):
+            os.makedirs("images")
+
+            for path in IMAGE_PATHS:
+                urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/{path}', f"{path}")
 
     st.title('Fashion Classifier')
     image_selector()

@@ -9,6 +9,7 @@ from rembg import remove
 import urllib.request
 import os
 
+REMOTE_URL = "https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI"
 IMAGE_PATHS = [
             "images/custom.jpg",
             "images/t-shirt.jpg",
@@ -29,7 +30,7 @@ def load_model() -> Sequential:
         os.makedirs("model/variables")
 
         for file in ["variables/variables.data-00000-of-00001", "variables/variables.index", "keras_metadata.pb", "saved_model.pb"]:
-            urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/model/{file}', f"model/{file}")
+            urllib.request.urlretrieve(f'{REMOTE_URL}/model/{file}', f"model/{file}")
     
     return keras.models.load_model("model")
 
@@ -102,7 +103,7 @@ def main():
             os.makedirs("images")
 
             for path in IMAGE_PATHS:
-                urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/{path}', f"{path}")
+                urllib.request.urlretrieve(f'{REMOTE_URL}/{path}', f"{path}")
 
     st.title('Fashion Classifier')
     image_selector()

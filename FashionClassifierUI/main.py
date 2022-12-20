@@ -6,11 +6,19 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 from rembg import remove
+import urllib.request
+import os
 
-@st.cache(allow_output_mutation=True)
+@st.experimental_singleton
 def load_model() -> Sequential:
-    model = keras.models.load_model("model")
-    return model
+    if not os.path.isdir("model"):
+        os.makedirs("model/variables")
+
+        for file in ["variables/variables.data-00000-of-00001", "variables/variables.index", "keras_metadata.pb", "saved_model.pb"]:
+            filename = urllib.request.urlretrieve(f'https://raw.githubusercontent.com/jacob-seiler/CampQMINDTeamB20/main/FashionClassifierUI/model/{file}', f"model/{file}")
+            print(file, filename)
+    
+    return keras.models.load_model("model")
 
 def image_selector():
     paths = [
